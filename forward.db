@@ -1,0 +1,50 @@
+@   IN  SOA     helper.ocp4.mylab.local. root.mylab.local. (
+                                                1001    ;Serial
+                                                3H      ;Refresh
+                                                15M     ;Retry
+                                                1W      ;Expire
+                                                1D      ;Minimum TTL
+                                                )
+
+;Name Server Information
+@      IN  NS      helper.ocp4.mylab.local.
+
+;IP address of Name Server
+helper.ocp4.mylab.local.				IN	A	192.168.100.100
+;
+; The api points to the IP of your load balancer
+api.ocp4.mylab.local.					IN	A	192.168.100.100
+api-int.ocp4.mylab.local.				IN	A	192.168.100.100
+;
+; The wildcard also points to the load balancer
+*.apps.ocp4.mylab.local.				IN	A	192.168.100.100
+;
+; The Console 
+console-openshift-console.apps.ocp4.mylab.local.     	IN      A    	192.168.100.100
+;
+; Ouath
+oauth-openshift.apps.ocp4.mylab.local.     		IN      A   	192.168.100.100
+;
+; Create entry for the bootstrap host
+bootstrap.ocp4.mylab.local.				IN	A	192.168.100.96
+;
+; Create entries for the master hosts
+master0.ocp4.mylab.local.				IN	A	192.168.100.97
+master1.ocp4.mylab.local.				IN	A	192.168.100.98
+master2.ocp4.mylab.local.				IN	A	192.168.100.99
+;
+; Create entries for the worker hosts
+worker0.ocp4.mylab.local.				IN	A	192.168.100.94
+worker1.ocp4.mylab.local.				IN	A	192.168.100.95
+;
+; The ETCd cluster lives on the masters...so point these to the IP of the masters
+etcd-0.ocp4.mylab.local.				IN	A	192.168.100.97
+etcd-1.ocp4.mylab.local.				IN	A	192.168.100.98
+etcd-2.ocp4.mylab.local.				IN	A	192.168.100.99
+;
+; The SRV records are IMPORTANT....make sure you get these right...note the trailing dot at the end...
+_etcd-server-ssl._tcp.ocp4.mylab.local. 		IN	SRV	0 10 2380 etcd-0.ocp4.mylab.local.
+_etcd-server-ssl._tcp.ocp4.mylab.local.	  		IN	SRV	0 10 2380 etcd-1.ocp4.mylab.local.
+_etcd-server-ssl._tcp.ocp4.mylab.local.			IN	SRV	0 10 2380 etcd-2.ocp4.mylab.local.
+;
+
